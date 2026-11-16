@@ -1,0 +1,225 @@
+/* =========================================================
+   Web responsiva · Enfoque "mobile first"
+   Conceptos aplicados:
+   1. Diseño responsivo     -> meta viewport + mobile first
+   2. Rejillas fluidas      -> CSS Grid (auto-fit, minmax, fr)
+   3. Unidades relativas    -> rem, %, fr, clamp()
+   4. Media queries         -> 40rem (tablet) y 64rem (escritorio)
+   5. Contenido adaptable   -> elementos que se muestran/ocultan
+   6. Imágenes flexibles    -> max-width: 100%; height: auto
+   ========================================================= */
+
+:root {
+  --color-primario: #e76f51;
+  --color-oscuro: #264653;
+  --color-claro: #f8f5f0;
+  --radio: 0.75rem;          /* rem: relativo al tamaño de letra raíz */
+  --espacio: 1rem;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { font-size: 100%; }   /* 1rem = 16px por defecto, respeta la config. del usuario */
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--color-oscuro);
+  background: var(--color-claro);
+}
+
+/* (6) Imágenes flexibles: nunca más anchas que su contenedor */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* (3) Contenedor fluido: ancho en %, con tope en rem */
+.contenedor {
+  width: 90%;
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+.seccion { padding-block: 3rem; }
+
+h1, h2, h3 { line-height: 1.2; margin-top: 0; }
+/* (3) Tipografía fluida con clamp(): mínimo, preferido (vw), máximo */
+h1 { font-size: clamp(1.75rem, 5vw, 3.25rem); }
+h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); }
+
+/* ---------- Cabecera ---------- */
+.cabecera {
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.cabecera__inner {
+  display: flex;
+  flex-direction: column;     /* móvil: logo y menú apilados */
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.75rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--color-oscuro);
+}
+.logo span { color: var(--color-primario); }
+
+.menu {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.menu a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+.menu a:hover { color: var(--color-primario); }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--color-oscuro), #2a9d8f);
+  color: #fff;
+  text-align: center;
+  padding-block: 4rem;
+}
+.hero p {
+  max-width: 40rem;
+  margin: 0 auto 1.5rem;
+  font-size: 1.1rem;
+}
+
+.boton {
+  display: inline-block;
+  padding: 0.75em 1.5em;      /* em: escala con el tamaño de letra del botón */
+  background: var(--color-primario);
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.boton:hover { filter: brightness(1.1); }
+
+/* ---------- (2) Rejilla fluida ---------- */
+.rejilla {
+  display: grid;
+  /* Tantas columnas como quepan, cada una de al menos 16rem y repartiendo el resto (1fr) */
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  background: #fff;
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.07);
+  display: flex;
+  flex-direction: column;
+}
+.tarjeta img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.tarjeta__cuerpo { padding: 1.25rem; }
+.tarjeta h3 { margin-bottom: 0.25rem; }
+
+.etiqueta {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primario);
+  margin-bottom: 0.5rem;
+}
+.detalle { margin: 0; opacity: 0.8; }
+
+/* (5) Contenido adaptable: en móvil se oculta la descripción larga */
+.extra { display: none; }
+
+/* ---------- Cómo funciona ---------- */
+.como { background: #fff; }
+
+.pasos {
+  display: grid;
+  grid-template-columns: 1fr;   /* móvil: una columna */
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+.pasos li {
+  counter-increment: paso;
+  background: var(--color-claro);
+  border-radius: var(--radio);
+  padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+  position: relative;
+}
+.pasos li::before {
+  content: counter(paso);
+  position: absolute;
+  left: 1rem;
+  top: 1.1rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-primario);
+  color: #fff;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- Pie ---------- */
+.pie {
+  background: var(--color-oscuro);
+  color: #fff;
+  text-align: center;
+  padding-block: 2rem;
+  font-size: 0.9rem;
+}
+.solo-escritorio { display: none; }
+
+/* =========================================================
+   (4) MEDIA QUERIES (mobile first: min-width)
+   ========================================================= */
+
+/* Tablet: >= 40rem (640px) */
+@media (min-width: 40rem) {
+  .cabecera__inner {
+    flex-direction: row;          /* logo a la izquierda, menú a la derecha */
+    justify-content: space-between;
+  }
+  .extra { display: block; }      /* ya hay sitio: mostramos la descripción */
+  .pasos { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Escritorio: >= 64rem (1024px) */
+@media (min-width: 64rem) {
+  .hero { padding-block: 7rem; }
+  .seccion { padding-block: 5rem; }
+  .solo-escritorio { display: block; opacity: 0.7; }
+}
+
+/* Accesibilidad: respetar a quien prefiere menos animación */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
