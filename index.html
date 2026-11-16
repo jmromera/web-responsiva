@@ -4,84 +4,148 @@
   <meta charset="UTF-8">
   <!-- Imprescindible para el diseño responsivo: el ancho del viewport = ancho del dispositivo -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plan Cerca · Agenda cultural</title>
+  <title>Plan Cerca · Web responsiva explicada</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="con-etiquetas">
+
+  <!-- ===== Panel didáctico fijo: muestra el estado actual ===== -->
+  <aside class="panel" aria-live="polite">
+    <div class="panel__fila">
+      <span class="panel__titulo">Media query activa:</span>
+      <strong class="panel__bp"></strong>
+    </div>
+    <div class="panel__fila">
+      <span class="panel__titulo">Viewport:</span>
+      <strong><span id="vw">–</span> px = <span id="vrem">–</span> rem</strong>
+    </div>
+    <div class="regla" aria-hidden="true">
+      <span class="regla__marca" style="--pos: 40">40rem</span>
+      <span class="regla__marca" style="--pos: 64">64rem</span>
+      <span class="regla__cursor" id="cursor"></span>
+    </div>
+    <button type="button" id="toggle" class="panel__boton">Ocultar etiquetas</button>
+  </aside>
 
   <header class="cabecera">
-    <div class="contenedor cabecera__inner">
+    <div class="contenedor cabecera__inner demo">
+      <span class="etq etq--mq" data-concepto="4">
+        Media query · <b class="txt-cabecera"></b>
+      </span>
       <a href="#" class="logo">Plan<span>Cerca</span></a>
       <nav class="menu" aria-label="Principal">
         <a href="#eventos">Eventos</a>
         <a href="#como">Cómo funciona</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#conceptos">Conceptos</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="contenedor">
-        <h1>Descubre planes culturales cerca de ti</h1>
-        <p>Conciertos, exposiciones y teatro en tu zona, en una página que se adapta a cualquier pantalla.</p>
+      <div class="contenedor demo">
+        <span class="etq etq--unidad" data-concepto="3">
+          Unidades relativas · <code>font-size: clamp(1.75rem, 5vw, 3.25rem)</code> → ahora <b data-medir="fuente" data-objetivo="#titulo"></b>
+        </span>
+        <h1 id="titulo">Descubre planes culturales cerca de ti</h1>
+        <p>Conciertos, exposiciones y teatro en tu zona. <strong>Cambia el tamaño de la ventana</strong> y mira cómo cambian las etiquetas de colores.</p>
         <a href="#eventos" class="boton">Ver eventos</a>
       </div>
     </section>
 
     <section id="eventos" class="contenedor seccion">
       <h2>Próximos eventos</h2>
-      <!-- Rejilla fluida: CSS Grid con auto-fit + minmax + fr -->
-      <div class="rejilla">
-        <article class="tarjeta">
-          <img src="img/evento1.svg" alt="Cartel de un concierto" loading="lazy">
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta">Música</span>
-            <h3>Concierto en la plaza</h3>
-            <p class="detalle">Sábado · 21:00 · Plaza Mayor</p>
-            <p class="extra">Banda local de pop-rock. Entrada libre hasta completar aforo.</p>
-          </div>
-        </article>
-        <article class="tarjeta">
-          <img src="img/evento2.svg" alt="Cartel de una exposición" loading="lazy">
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta">Arte</span>
-            <h3>Exposición de fotografía</h3>
-            <p class="detalle">Hasta el 30 · Casa de Cultura</p>
-            <p class="extra">Muestra colectiva sobre paisajes de La Mancha.</p>
-          </div>
-        </article>
-        <article class="tarjeta">
-          <img src="img/evento3.svg" alt="Cartel de una obra de teatro" loading="lazy">
-          <div class="tarjeta__cuerpo">
-            <span class="etiqueta">Teatro</span>
-            <h3>Clásicos en escena</h3>
-            <p class="detalle">Viernes · 20:30 · Teatro Circo</p>
-            <p class="extra">Adaptación contemporánea de una comedia del Siglo de Oro.</p>
-          </div>
-        </article>
+
+      <div class="demo">
+        <span class="etq etq--rejilla" data-concepto="2">
+          Rejilla fluida · <code>repeat(auto-fit, minmax(16rem, 1fr))</code> → ahora <b data-medir="columnas" data-objetivo="#rejilla"></b>
+        </span>
+        <!-- Rejilla fluida: CSS Grid con auto-fit + minmax + fr -->
+        <div class="rejilla" id="rejilla">
+          <article class="tarjeta">
+            <div class="demo demo--img">
+              <span class="etq etq--img" data-concepto="6">Imagen flexible · <code>max-width: 100%</code> → <b data-medir="ancho" data-objetivo="next"></b></span>
+              <img src="img/evento1.svg" alt="Cartel de un concierto">
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="etiqueta">Música</span>
+              <h3>Concierto en la plaza</h3>
+              <p class="detalle">Sábado · 21:00 · Plaza Mayor</p>
+              <p class="extra">Banda local de pop-rock. Entrada libre hasta completar aforo.</p>
+              <span class="etq etq--contenido" data-concepto="5"></span>
+            </div>
+          </article>
+          <article class="tarjeta">
+            <div class="demo demo--img">
+              <span class="etq etq--img" data-concepto="6">Imagen flexible · <code>max-width: 100%</code> → <b data-medir="ancho" data-objetivo="next"></b></span>
+              <img src="img/evento2.svg" alt="Cartel de una exposición">
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="etiqueta">Arte</span>
+              <h3>Exposición de fotografía</h3>
+              <p class="detalle">Hasta el 30 · Casa de Cultura</p>
+              <p class="extra">Muestra colectiva sobre paisajes de La Mancha.</p>
+              <span class="etq etq--contenido" data-concepto="5"></span>
+            </div>
+          </article>
+          <article class="tarjeta">
+            <div class="demo demo--img">
+              <span class="etq etq--img" data-concepto="6">Imagen flexible · <code>max-width: 100%</code> → <b data-medir="ancho" data-objetivo="next"></b></span>
+              <img src="img/evento3.svg" alt="Cartel de una obra de teatro">
+            </div>
+            <div class="tarjeta__cuerpo">
+              <span class="etiqueta">Teatro</span>
+              <h3>Clásicos en escena</h3>
+              <p class="detalle">Viernes · 20:30 · Teatro Circo</p>
+              <p class="extra">Adaptación contemporánea de una comedia del Siglo de Oro.</p>
+              <span class="etq etq--contenido" data-concepto="5"></span>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
     <section id="como" class="como">
       <div class="contenedor seccion">
         <h2>Cómo funciona</h2>
-        <ol class="pasos">
-          <li><strong>Elige tu zona</strong> y el radio de búsqueda.</li>
-          <li><strong>Filtra</strong> por tipo de evento y fecha.</li>
-          <li><strong>Guarda</strong> tus planes favoritos.</li>
-        </ol>
+        <div class="demo">
+          <span class="etq etq--mq" data-concepto="4">
+            Media query · <b class="txt-pasos"></b>
+          </span>
+          <ol class="pasos">
+            <li><strong>Elige tu zona</strong> y el radio de búsqueda.</li>
+            <li><strong>Filtra</strong> por tipo de evento y fecha.</li>
+            <li><strong>Guarda</strong> tus planes favoritos.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Leyenda: los 6 conceptos de la actividad ===== -->
+    <section id="conceptos" class="contenedor seccion">
+      <h2>Los 6 conceptos de esta página</h2>
+      <div class="demo">
+        <span class="etq etq--unidad" data-concepto="3">
+          Unidades relativas · contenedor <code>width: 90%; max-width: 72rem</code> → ahora <b data-medir="ancho" data-objetivo="#conceptos"></b>
+        </span>
+        <ul class="leyenda">
+          <li><span class="punto" data-concepto="1"></span><div><strong>1. Diseño responsivo</strong><p>Una sola página que se adapta a móvil, tablet y escritorio. Empieza en móvil (<em>mobile first</em>) y amplía con <code>min-width</code>. Lo ves en el panel de arriba.</p></div></li>
+          <li><span class="punto" data-concepto="2"></span><div><strong>2. Rejillas fluidas</strong><p>CSS Grid decide cuántas columnas caben sin media queries: <code>auto-fit</code> + <code>minmax(16rem, 1fr)</code>.</p></div></li>
+          <li><span class="punto" data-concepto="3"></span><div><strong>3. Unidades relativas</strong><p><code>%</code> para anchos, <code>rem</code>/<code>em</code> para textos y espacios, <code>fr</code> para repartir columnas y <code>clamp()</code> + <code>vw</code> para tipografía fluida.</p></div></li>
+          <li><span class="punto" data-concepto="4"></span><div><strong>4. Media queries</strong><p>Dos puntos de corte: <code>40rem</code> (640px, tablet) y <code>64rem</code> (1024px, escritorio).</p></div></li>
+          <li><span class="punto" data-concepto="5"></span><div><strong>5. Contenido adaptable</strong><p>En móvil se oculta la descripción de las tarjetas para priorizar lo esencial.</p></div></li>
+          <li><span class="punto" data-concepto="6"></span><div><strong>6. Imágenes flexibles</strong><p><code>max-width: 100%; height: auto</code> + <code>aspect-ratio</code>: la imagen nunca se sale de su caja.</p></div></li>
+        </ul>
       </div>
     </section>
   </main>
 
-  <footer id="contacto" class="pie">
+  <footer class="pie">
     <div class="contenedor">
-      <p>Actividad práctica · HCI: Desarrollo web y móvil</p>
-      <!-- Contenido adaptable: este texto solo aparece en pantallas grandes -->
-      <p class="solo-escritorio">Redimensiona la ventana para ver cómo cambia el diseño.</p>
+      <p>Actividad práctica · HCI: Desarrollo web y móvil · Universidad Europea</p>
     </div>
   </footer>
 
+  <script src="js/etiquetas.js"></script>
 </body>
 </html>

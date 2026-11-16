@@ -223,3 +223,177 @@ h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 }
+
+/* =========================================================
+   CAPA DIDÁCTICA · Etiquetas que muestran cada concepto
+   Los textos que dependen del ancho se cambian con las
+   MISMAS media queries (pseudo-elemento ::after + content),
+   así se ve que el cambio lo hace el CSS, no JavaScript.
+   ========================================================= */
+
+:root {
+  --c1: #6d28d9;   /* 1 Diseño responsivo */
+  --c2: #0e7490;   /* 2 Rejilla fluida */
+  --c3: #b45309;   /* 3 Unidades relativas */
+  --c4: #be123c;   /* 4 Media queries */
+  --c5: #15803d;   /* 5 Contenido adaptable */
+  --c6: #1d4ed8;   /* 6 Imágenes flexibles */
+}
+
+body { padding-bottom: 9rem; }
+
+.demo { position: relative; }
+
+/* Etiqueta base */
+.etq {
+  display: none;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.4rem;
+  font: 600 0.75rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #fff;
+  background: var(--c, #333);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+}
+.etq code { font: inherit; opacity: 0.85; font-weight: 400; }
+.etq b { background: rgb(255 255 255 / 0.22); padding: 0 0.3rem; border-radius: 0.25rem; }
+.con-etiquetas .etq { display: block; }
+
+/* Contorno punteado en lo que se está explicando */
+.con-etiquetas .demo { outline: 2px dashed var(--borde, transparent); outline-offset: 0.35rem; border-radius: 0.3rem; }
+
+[data-concepto="1"] { --c: var(--c1); }
+[data-concepto="2"] { --c: var(--c2); }
+[data-concepto="3"] { --c: var(--c3); }
+[data-concepto="4"] { --c: var(--c4); }
+[data-concepto="5"] { --c: var(--c5); }
+[data-concepto="6"] { --c: var(--c6); }
+
+.con-etiquetas .demo:has(> .etq--rejilla) { --borde: var(--c2); }
+.con-etiquetas .demo:has(> .etq--mq)      { --borde: var(--c4); }
+.con-etiquetas .demo:has(> .etq--img)     { --borde: var(--c6); }
+
+.cabecera__inner .etq { position: absolute; top: -0.2rem; left: 0; transform: translateY(-100%); }
+.con-etiquetas .cabecera__inner { margin-top: 1.6rem; }
+.hero .etq { margin-inline: auto; }
+
+/* Etiqueta sobre la imagen */
+.demo--img .etq { position: absolute; top: 0.5rem; left: 0.5rem; margin: 0; z-index: 1; }
+
+/* Textos que cambian con media query (mobile first) */
+.txt-cabecera::after   { content: "< 40rem → logo y menú apilados (flex-direction: column)"; }
+.txt-pasos::after      { content: "< 40rem → 1 columna (grid-template-columns: 1fr)"; }
+.etq--contenido::after { content: "Contenido adaptable · < 40rem → descripción oculta (display: none)"; }
+.panel__bp::after      { content: "Móvil · base, sin media query"; color: var(--c4); }
+
+/* ---------- Panel fijo ---------- */
+.panel {
+  position: fixed;
+  inset: auto 0.5rem 0.5rem 0.5rem;
+  z-index: 20;
+  background: #111827;
+  color: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.3);
+  display: grid;
+  gap: 0.35rem;
+}
+.panel__fila { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.panel__titulo { opacity: 0.7; }
+.panel__bp::after { color: #fda4af; }
+.panel__boton {
+  justify-self: start;
+  font: inherit;
+  font-weight: 600;
+  background: #374151;
+  color: inherit;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+
+/* Regla con los puntos de corte (0 a 80rem) */
+.regla {
+  position: relative;
+  height: 1.4rem;
+  margin-top: 0.2rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(to right,
+    #4c1d95 0 50%,          /* móvil  0–40rem  */
+    #9f1239 50% 80%,        /* tablet 40–64rem */
+    #065f46 80% 100%);      /* escritorio 64rem+ */
+}
+.regla__marca {
+  position: absolute;
+  left: calc(var(--pos) / 80 * 100%);
+  top: 100%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  opacity: 0.75;
+}
+.regla__marca::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  height: 1.4rem;
+  border-left: 2px solid #fff;
+}
+.regla { margin-bottom: 0.9rem; }
+.regla__cursor {
+  position: absolute;
+  top: -0.25rem;
+  bottom: -0.25rem;
+  width: 0.3rem;
+  background: #facc15;
+  border-radius: 0.2rem;
+  transform: translateX(-50%);
+  transition: left 0.15s;
+}
+
+/* ---------- Leyenda ---------- */
+.leyenda {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+.leyenda li {
+  display: flex;
+  gap: 0.75rem;
+  background: #fff;
+  border-radius: var(--radio);
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.06);
+}
+.leyenda p { margin: 0.25rem 0 0; font-size: 0.9rem; }
+.punto {
+  flex: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+/* ---------- Mismas media queries que el diseño ---------- */
+@media (min-width: 40rem) {
+  .txt-cabecera::after   { content: "≥ 40rem → logo izquierda, menú derecha (flex-direction: row)"; }
+  .txt-pasos::after      { content: "≥ 40rem → 3 columnas (repeat(3, 1fr))"; }
+  .etq--contenido::after { content: "Contenido adaptable · ≥ 40rem → descripción visible (display: block)"; }
+  .panel__bp::after      { content: "Tablet · @media (min-width: 40rem)"; }
+  .panel { inset: auto 1rem 1rem auto; width: 22rem; }
+  body { padding-bottom: 2rem; }
+}
+
+@media (min-width: 64rem) {
+  .txt-cabecera::after { content: "≥ 64rem → igual que tablet; aumenta el padding de las secciones"; }
+  .panel__bp::after    { content: "Escritorio · @media (min-width: 64rem)"; }
+}

@@ -1,29 +1,29 @@
-# Web responsiva · Plan Cerca
+# Web responsiva · Plan Cerca (versión didáctica)
 
-Pequeña página responsiva (actividad práctica de HCI: Desarrollo web y móvil), publicada con GitHub Pages.
+Actividad práctica de **HCI: Desarrollo web y móvil**: una pequeña página responsiva publicada con GitHub Pages.
+
+🔗 **Demo:** https://jmromera.github.io/web-responsiva/
+
+**Cambia el tamaño de la ventana** (o abre las herramientas de desarrollo en modo dispositivo): las etiquetas de colores muestran en directo qué concepto se aplica y su valor actual. El panel inferior indica qué media query está activa y dónde estás respecto a los puntos de corte. El botón *Ocultar etiquetas* muestra la página limpia.
 
 ## Conceptos aplicados
 
-| Concepto | Dónde |
-|---|---|
-| Diseño responsivo | `<meta name="viewport">` + enfoque *mobile first* |
-| Rejillas fluidas | `.rejilla` con `repeat(auto-fit, minmax(16rem, 1fr))` |
-| Unidades relativas | `%` en el contenedor, `rem`/`em` en espacios y textos, `fr` en la rejilla, `clamp()` en títulos |
-| Media queries | `min-width: 40rem` (tablet) y `min-width: 64rem` (escritorio) |
-| Contenido adaptable | La descripción de las tarjetas y el texto del pie solo aparecen en pantallas mayores |
-| Imágenes flexibles | `img { max-width: 100%; height: auto; }` + `aspect-ratio` y `object-fit` |
+| # | Concepto | Dónde | Qué muestra la etiqueta |
+|---|---|---|---|
+| 1 | Diseño responsivo | `<meta name="viewport">` + *mobile first* | Panel: media query activa y ancho en px/rem |
+| 2 | Rejillas fluidas | `.rejilla` → `repeat(auto-fit, minmax(16rem, 1fr))` | Nº de columnas y su ancho |
+| 3 | Unidades relativas | `%`, `rem`, `em`, `fr`, `clamp()` + `vw` | Tamaño real del título y ancho del contenedor |
+| 4 | Media queries | `min-width: 40rem` y `min-width: 64rem` | Cómo cambian cabecera y "Cómo funciona" |
+| 5 | Contenido adaptable | `.extra` oculto en móvil | Si la descripción está oculta o visible |
+| 6 | Imágenes flexibles | `max-width: 100%; height: auto` + `aspect-ratio` | Ancho real de cada imagen |
 
-## Publicar en GitHub Pages
+Los textos que dependen del ancho se cambian **solo con CSS** (`::after { content: … }` dentro de las mismas media queries). El JavaScript (`js/etiquetas.js`) solo mide valores reales (px, columnas) para mostrarlos; la web es responsiva sin él.
 
-1. Crea un repositorio público en GitHub (p. ej. `web-responsiva`).
-2. Sube el contenido de esta carpeta (que `index.html` quede en la raíz):
-   ```bash
-   git init
-   git add .
-   git commit -m "Web responsiva"
-   git branch -M main
-   git remote add origin https://github.com/TU_USUARIO/web-responsiva.git
-   git push -u origin main
-   ```
-3. En el repositorio: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, rama `main`, carpeta `/ (root)` → **Save**.
-4. Al cabo de un minuto estará en `https://TU_USUARIO.github.io/web-responsiva/`.
+## Estructura
+
+```
+index.html
+css/styles.css      → diseño + capa didáctica (al final)
+js/etiquetas.js     → mediciones en directo de las etiquetas
+img/                → imágenes SVG de ejemplo
+```
